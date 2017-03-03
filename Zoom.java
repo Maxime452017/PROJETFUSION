@@ -1,56 +1,63 @@
 package test;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
- 
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
- 
- 
-public class Zoom extends JComponent implements MouseWheelListener  {
-    private static final long serialVersionUID = 1L;
-    public int width, height;
-    public BufferedImage img;
-    public float zoom = 1f;
-     
-    public Zoom(int width, int height, InputStream is) {
-        this.width = width;
-        this.height = height;
-        setPreferredSize(new Dimension(width, height));
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) { e.printStackTrace(); }
-        addMouseWheelListener(this);
-    }
-     
-    @Override
-    protected void paintComponent(Graphics gd) {
-        Graphics2D g = (Graphics2D) gd;
-         
-        AffineTransform t = new AffineTransform();
-        //Ici je centre l'image
-        float currentImgWidth = img.getWidth()*zoom, currentImgHeight = img.getHeight()*zoom;
-        t.translate(width/2-currentImgWidth/2, height/2-currentImgHeight/2);
-        //J'applique le "scale"
-        t.scale(zoom, zoom);
-        //Et j'affiche en utilisant la transformation
-        g.drawImage(img, t, null);
-         
-        //On libère un peu de mémoire histoire de laisser le GC tranquille un peu plus longtemps
-        g.dispose();
-    }
- 
-    public void mouseWheelMoved(MouseWheelEvent e) {
-        zoom -= 0.1f * e.getWheelRotation();
-        repaint();
-    }
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
+import javax.swing.JPanel;
+
+public class Zoom extends JPanel implements MouseListener,MouseMotionListener{
+   
+   
+ public void sdz(String filename) throws Exception {
+         /*
+         * insérer ici l'implémentation du mouseListener
+         * Ca se passe de cette facon
+         */
+          this.addMouseListener(this);
+          this.addMouseMotionListener(this);
+ }
+
+    public void mouseDragged(MouseEvent e) {
+        // TODO Auto-generated method stub
+ 
+    }
+        //lorsque la souris bouge
+    public void mouseMoved(MouseEvent e) {
+        System.out.println("Position: x= "+e.getX()+" y = "+e.getY());
+    }
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        System.out.println("Clic: x= "+e.getX()+" y = "+e.getY());
+         
+    }
+ 
+   
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+         
+    }
+ 
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+         
+    }
+ 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+         
+    }
+ 
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+         
+    }
+  
+   
+ public static void main(String args[]) throws Exception{
+         new Test("D:/workspace/FUSION_IMAGE/src/test/RVB-FusionOrtho.png");
+    }
 }
